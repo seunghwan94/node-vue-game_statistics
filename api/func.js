@@ -2,10 +2,10 @@ const axios = require('axios');
 const api = require('./config.json');
 
 // axios 요청을 비동기 함수로 정의하여 Promise를 반환
-async function axios_req(acti, str) {
-  const url = api.api_url+acti;
+async function axios_req(uri, nickname) {
+  const url = api.api_url+uri;
   const key = api.api_key;
-  const params = {query : str};
+  const params = {query : nickname};
   const headers = {'x-api-key' : key};
 
   try {

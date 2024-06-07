@@ -1,30 +1,31 @@
 const express = require('express');
 const func = require('./func')
+const config = require('./config.json');
 const app = express();
 const port = 3030;
 
-var uriArr = [
-
-  "userStats" = [
-    "acti" = "user/nickname"
-  ]
-
-]
-
 app.get('/', async (req, res) => {
-  const acti = "user/nickname";
-  const str = req.body;
-
+ 
     try {
-        const userNumJson = await func.axios_req(acti, str);
+        //사용자 넘버 가져오기
+        const uri1 = "user/nickname";
+        const nickname = '찢어진니키의장갑';
+        const userNumJson = await func.axios_req(uri1, nickname);
         const userNum = String(userNumJson.user.userNum);
 
-        const uri = "user/stats/";
-        const req = uri+userNum+"/25";
-        const returnData = await func.axios_req(req);
-      
+        //사용자 현재 시즌 정보 가져오기
+        const seasonId = "/25";
+        const uri2 = "user/stats/"+userNum+seasonId;
+        const userStatsJson = await func.axios_req(uri2);
+        const userStats = userStatsJson.userStats[0];
+
+        //사용자 최근 매칭 데이터 가져오기
+        const uri3 = "user/games/"+userNum;
+        const userMatches = await func.axios_req(uri3);
+
         
-        res.json(returnData);
+        
+        res.json(userMatches);
 
     } catch (error) {
         console.error(error);
