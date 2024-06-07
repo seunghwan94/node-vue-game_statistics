@@ -36,7 +36,7 @@ export default {
   name: 'App',
   data(){
     return{
-      is_main:0,
+      is_main:1,
     }
   },
   components: {
