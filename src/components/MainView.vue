@@ -1,7 +1,7 @@
 <template>
   <div class="text-contain"></div>
   <div class="text-contains">
-    <div style="font-weight: bold;font-size: 35px;color: white;">ER.GG</div>
+    <div class="logo-text" style="font-size: 35px;">ER.GG</div>
     <div class="input-container">
       <input v-model="userId" type="text" class="input-text" placeholder="플레이어 닉네임을 입력해 주세요.">
       <font-awesome-icon class="icon-glass" :icon="['fas', 'magnifying-glass']" style="color:#2c3e50" size="lg" />
