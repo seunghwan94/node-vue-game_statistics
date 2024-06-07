@@ -36,7 +36,7 @@ export default {
   name: 'App',
   data(){
     return{
-      is_main:1,
+      is_main:0,
     }
   },
   components: {
@@ -48,14 +48,29 @@ export default {
 </script>
 
 <style>
+@font-face {
+    font-family: 'baemin';
+    src: url('./assets/baemin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'godic';
+    src: url('./assets/Pretendard-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 body{
   margin:0px;
   /* padding: 20px; */
   box-sizing: border-box;
   background: white;
 }
+.input-text::placeholder {
+  font-family: 'baemin', sans-serif;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'godic', sans-serif; /* 전체 앱에 적용 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -76,9 +91,13 @@ body{
   padding: 16px 20px;
 }
 .logo-text {
+  font-family: 'baemin', sans-serif;
   font-size: 20px;
   font-weight: bold;
   color:white;
+}
+.input-text {
+  font-family: 'godic', sans-serif;
 }
 .header-left {
   display: flex;
