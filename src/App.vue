@@ -13,10 +13,10 @@
       </div> 
     </div>
 
-    <div v-if="is_main==0" class="main-body">
+    <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
       <MainView />
     </div>
-    <div v-if="is_main==1" class="main-body">
+    <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;">
       <MainSearch />
     </div>
 
@@ -106,7 +106,7 @@ body{
 }
 .main-body {
   width: 100%;
-  height: calc(100vh - 213px);
+  
 }
 .main-footer {
   background-color: gray;
