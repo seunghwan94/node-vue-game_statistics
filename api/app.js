@@ -1,10 +1,14 @@
 const express = require('express');
-const func = require('./func')
+const cors = require('cors');
+const func = require('./func');
 const config = require('./config.json');
 const app = express();
 const port = 3030;
 
-app.get('/', async (req, res) => {
+app.use(cors());
+app.use(express.json());
+
+app.post('/', async (req, res) => {
  
     try {
         //사용자 넘버 가져오기

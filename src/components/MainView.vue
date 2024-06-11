@@ -3,8 +3,8 @@
   <div class="text-contains">
     <div class="logo-text" style="font-size: 35px;">ER.GG</div>
     <div class="input-container">
-      <input v-model="userId" type="text" class="input-text" placeholder="플레이어 닉네임을 입력해 주세요.">
-      <font-awesome-icon class="icon-glass" :icon="['fas', 'magnifying-glass']" style="color:#2c3e50" size="lg" />
+      <input v-model="userId" type="text" class="input-text" placeholder="플레이어 닉네임을 입력해 주세요."  @keyup.enter="SearchName">
+      <font-awesome-icon class="icon-glass" :icon="['fas', 'magnifying-glass']" style="color:#2c3e50" size="lg" @click="SearchName"/>
     </div>
     <div class="text-info">
       <font-awesome-icon class="icon-info" :icon="['fas', 'circle-info']" style="color:white" size="lg" />
@@ -18,6 +18,12 @@ export default {
   data() {
     return {
       userId: ''
+    }
+  },
+  methods: {
+    SearchName(){
+      console.log(this.userId);
+      this.$emit('Search', this.userId);
     }
   }
 }

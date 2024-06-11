@@ -14,7 +14,7 @@
     </div>
 
     <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
-      <MainView />
+      <MainView @Search="Search" />
     </div>
     <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;">
       <MainSearch />
@@ -31,18 +31,34 @@
 import MainView from './components/MainView.vue';
 import MainFooter from './components/MainFooter.vue';
 import MainSearch from './components/MainSearch.vue';
+import axios from 'axios';
+import {Server} from '../config.json'
+
+console.log(`${Server.host}:${Server.port}/`);
 
 export default {
   name: 'App',
-  data(){
-    return{
-      is_main:1,
+  data() {
+    return {
+      is_main: 0,
+      userId: '' // userId를 컴포넌트의 data 속성에 추가
+    };
+  },
+  methods: {
+    Search() {
+      axios.post(`${Server.host}:${Server.port}/`, {
+        userId: this.userId
+      }).then(res => {
+        console.log(res.data);
+      }).catch(err => {
+        console.error(err);
+      });
     }
   },
   components: {
     MainView,
     MainFooter,
-    MainSearch,
+    MainSearch
   }
 }
 </script>
