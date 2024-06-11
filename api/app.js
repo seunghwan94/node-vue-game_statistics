@@ -23,9 +23,9 @@ app.post('/', async (req, res) => {
         const userStatsJson = await func.axios_req(uri2);
         const userStats = userStatsJson.userStats[0];
 
-        //사용자 최근 매칭 데이터 가져오기
-        const uri3 = "user/games/"+userNum;
-        const userMatches = await func.axios_req(uri3);
+        // //사용자 최근 매칭 데이터 가져오기
+        // const uri3 = "user/games/"+userNum;
+        // const userMatches = await func.axios_req(uri3);
 
         
         

@@ -1,14 +1,14 @@
 <template>
   <div class="search-contain">
-    <div class="search-header">
-      <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv 100</div>
-      <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">아이디</div>
+    <div class="search-header">{{ userSearchList[0].userGames[0].accountLevel }}
+      <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div>
+      <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].userGames[0].nickname }}</div>
       <div style="font-size: 14px;">정규 시즌 4</div>
     </div>
     <div class="search-body">
       <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
         <div>랭크</div>
-        <div>4297 RP</div>
+        <div>{{ userSearchList[0].userGames[0].rankPoint }} RP</div>
         <div>플래티넘 3</div>
         <div>17,387위</div>
       </div>
@@ -22,6 +22,9 @@ export default {
     return {
       userId: ''
     }
+  },
+  props:{
+    userSearchList:Object,
   }
 }
 </script>

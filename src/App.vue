@@ -17,7 +17,7 @@
       <MainView @Search="Search" />
     </div>
     <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;">
-      <MainSearch />
+      <MainSearch :userSearchList="userSearchList"/>
     </div>
 
     <div class="main-footer">
@@ -34,14 +34,13 @@ import MainSearch from './components/MainSearch.vue';
 import axios from 'axios';
 import {Server} from '../config.json'
 
-console.log(`${Server.host}:${Server.port}/`);
-
 export default {
   name: 'App',
   data() {
     return {
       is_main: 0,
-      userId: '' // userId를 컴포넌트의 data 속성에 추가
+      userId: '',
+      userSearchList: [],
     };
   },
   methods: {
@@ -50,6 +49,8 @@ export default {
         userId: this.userId
       }).then(res => {
         console.log(res.data);
+        this.userSearchList.push(res.data);
+        this.is_main=1;
       }).catch(err => {
         console.error(err);
       });
