@@ -8,7 +8,7 @@ const port = 3030;
 app.use(cors());
 app.use(express.json());
 
-app.post('/', async (req, res) => {
+app.get('/', async (req, res) => {
  
     try {
         //사용자 넘버 가져오기
@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
 
         
         
-        res.json(userMatches);
+        res.json(userStats);
 
     } catch (error) {
         console.error(error);

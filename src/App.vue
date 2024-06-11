@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     Search() {
-      axios.post(`${Server.host}:${Server.port}/`, {
+      axios.get(`${Server.host}:${Server.port}/`, {
         userId: this.userId
       }).then(res => {
         console.log(res.data);
