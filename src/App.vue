@@ -7,17 +7,25 @@
       </div>
 
       <div class="header-menu">
-        <div class="header-menu-list">메뉴</div>
-        <div class="header-menu-list">상태</div>
-        <div class="header-menu-list">창</div>
+        <div class="header-menu-list" @click="is_main=0">전적</div>
+        <div class="header-menu-list" @click="is_main=2">티어</div>
+        <div class="header-menu-list" @click="is_main=3">창</div>
       </div> 
     </div>
-
+    <!-- 전적 -->
     <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
       <MainView @Search="Search" />
     </div>
     <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;height:100vh">
       <MainSearch :userSearchList="userSearchList"/>
+    </div>
+    <!-- 티어 -->
+    <div v-if="is_main==2" class="main-body" style="display: flex;justify-content: center;height:100vh">
+      <MainTier />
+    </div>
+    <!-- 창 -->
+    <div v-if="is_main==3" class="main-body" style="display: flex;justify-content: center;height:100vh">
+      <MainTier />
     </div>
 
     <div v-if="is_main==0" class="main-footer">
@@ -31,6 +39,7 @@
 import MainView from './components/MainView.vue';
 import MainFooter from './components/MainFooter.vue';
 import MainSearch from './components/MainSearch.vue';
+import MainTier from './components/MainTier.vue';
 import axios from 'axios';
 import {Server} from '../config.json'
 
@@ -38,7 +47,7 @@ export default {
   name: 'App',
   data() {
     return {
-      is_main: 0,
+      is_main: 3,
       userId: '',
       userSearchList: [],
     };
@@ -59,7 +68,8 @@ export default {
   components: {
     MainView,
     MainFooter,
-    MainSearch
+    MainSearch,
+    MainTier,
   }
 }
 </script>

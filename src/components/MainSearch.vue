@@ -1,7 +1,7 @@
 <template>
   <div class="search-contain">
     <div class="search-header">
-      <!-- <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div> -->
+      <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv ((레벨))</div>
       <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].nickname }}</div>
       <div style="font-size: 14px;">정규 시즌 {{ userSearchList[0].seasonId }}</div>
     </div>
