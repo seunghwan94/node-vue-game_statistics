@@ -31,7 +31,7 @@ export default {
 
 <style>
 .input-container {
-  position: relative;
+  /* position: relative; */
   display: flex;
   justify-content: center;
   width: 100%;

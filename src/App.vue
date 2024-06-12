@@ -1,7 +1,7 @@
 <template>
   <div class="contain">    
     <div class="main-header">
-      <div class="header-left">
+      <div class="header-logo">
         <img class="logo" alt="logo" src="./assets/logo2.png">
         <div class="logo-text">ER.GG</div>
       </div>
@@ -16,11 +16,11 @@
     <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
       <MainView @Search="Search" />
     </div>
-    <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;">
+    <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;height:100vh">
       <MainSearch :userSearchList="userSearchList"/>
     </div>
 
-    <div class="main-footer">
+    <div v-if="is_main==0" class="main-footer">
       <MainFooter />
     </div>
   </div>
@@ -77,6 +77,7 @@ export default {
     font-weight: normal;
     font-style: normal;
 }
+
 body{
   margin:0px;
   /* padding: 20px; */
@@ -116,7 +117,7 @@ body{
 .input-text {
   font-family: 'godic', sans-serif;
 }
-.header-left {
+.header-logo {
   display: flex;
   align-items: center;
 }
@@ -124,16 +125,16 @@ body{
 .main-header {
   background: #041244;
   width: 100%;
-  height: 122px;
+  /* height: 122px; */
 }
 .header-menu {
   background: #2c3e50;
   width: 100%;
-  height: 45px;
+  /* height: 45px; */
   color: white;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 15px 20px;
 }
 .header-menu-list {
   margin: 0 10px;
@@ -142,7 +143,6 @@ body{
 }
 .main-body {
   width: 100%;
-  
 }
 .main-footer {
   background-color: gray;
