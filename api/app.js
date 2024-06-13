@@ -21,15 +21,45 @@ app.get('/', async (req, res) => {
         const seasonId = "/25";
         const uri2 = "user/stats/"+userNum+seasonId;
         const userStatsJson = await func.axios_req(uri2);
-        const userStats = userStatsJson.userStats[0];
+        const userStats = userStatsJson.userStats.map(stat => {
+            return {
+                stat
+            };
+        });
 
-        // //사용자 최근 매칭 데이터 가져오기
-        // const uri3 = "user/games/"+userNum;
-        // const userMatches = await func.axios_req(uri3);
+        //사용자 최근 매칭 데이터 가져오기
+        const uri3 = "user/games/"+userNum;
+        const userGamesJson = await func.axios_req(uri3);
+        const userGames = userGamesJson.userGames.map(game => {
+            const characterNum = game.characterNum;
+            const deaths = game.playerDeaths;
+            const kda = deaths === 0 ? (game.playerKill + game.playerAssistant) : ((game.playerKill + game.playerAssistant) / deaths).toFixed(2);
+            
+            return {
+                accountLevel: game.accountLevel, // 계정 레벨
+                matchingMode: game.matchingMode, // 2:일반, 3:랭크
+                playTime: game.playTime,// 플레이 시간 (ex 14분 54초 -> 1454)
+                characterName: config.character[characterNum],// 캐릭터 이름
+                skinCode: game.skinCode,// 사용한 스킨
+                gameRank: game.gameRank,// 최종 등수.
+                characterLevel: game.characterLevel,// 최종 레벨
+                teamKill: game.teamKill,// TK
+                playerKill: game.playerKill,// K
+                playerAssistant: game.playerAssistant,// A
+                damageToPlayer: game.damageToPlayer,// 딜량
+                kda: parseFloat(kda)// kda
+            };
+        });
 
+        const accountLevel = userGames.length > 0 ? userGames[0].accountLevel : "판수가 부족합니다.";
         
-        
-        res.json(userStats);
+        const response = {
+            userStats,
+            userGames,
+            accountLevel
+        };
+
+        res.json(response);
 
     } catch (error) {
         console.error(error);
