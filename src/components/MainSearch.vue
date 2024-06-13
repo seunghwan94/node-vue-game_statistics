@@ -1,5 +1,5 @@
 <template>
-  <div class="search-contain">{{ GameList }}
+  <div class="search-contain">
     <div class="search-header">
       <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div>
       <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].userStats[0].stat.nickname }}</div>
@@ -7,11 +7,13 @@
     </div>
     <div class="search-body">
       <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;margin-bottom: 15px;">
-        <div style="margin-right: 20px;"><img :src="tierImages[8]" style="width: 40px;padding: 0px;border-radius:50%;"/></div>
+        <div style="margin-right: 20px;">
+          <img :src="tierImage" style="width: 40px;padding: 0px;border-radius:50%;"/>
+        </div>
         <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
           <div>랭크</div>
           <div>{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
-          <div>((티어))</div>
+          <div>{{ tierName }}</div>
           <div>((순위)) 위</div>
         </div>
       </div>
@@ -27,7 +29,6 @@
       </div>
       <hr/>
       <MainSearchRecordVue v-for="(datalist,index) in GameList" :key="index" :datalist="datalist" />
-
     </div>
   </div>
 </template>
@@ -35,6 +36,8 @@
 <script>
 import { Chart, registerables } from 'chart.js'
 import MainSearchRecordVue from './MainSearchRecord.vue'
+import config from '../../config.json'
+
 Chart.register(...registerables)
 
 export default {
@@ -43,17 +46,10 @@ export default {
       is_button: 0,
       userId: '',
       GameList:[],
-      tierImages: [
-          'https://cdn.dak.gg/er/images/tier/full/1.png',
-          'https://cdn.dak.gg/er/images/tier/full/2.png',
-          'https://cdn.dak.gg/er/images/tier/full/3.png',
-          'https://cdn.dak.gg/er/images/tier/full/4.png',
-          'https://cdn.dak.gg/er/images/tier/full/5.png',
-          'https://cdn.dak.gg/er/images/tier/full/6.png',
-          'https://cdn.dak.gg/er/images/tier/full/66.png',
-          'https://cdn.dak.gg/er/images/tier/full/7.png',
-          'https://cdn.dak.gg/er/images/tier/full/8.png'
-        ],
+
+      TierList: config.TierList,
+      Tier: config.Tier,
+
       type: 'bar',
       data: {
         labels: [ 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange' ],
@@ -102,6 +98,30 @@ export default {
     },
     gameListadd(){
       this.GameList=this.userSearchList[0].userGames;
+    },
+    findTierKey(mmr) {
+      let keys = Object.values(this.Tier);
+      let index = 0;
+      for (let i = keys.length - 1; i >= 0; i--) {
+        if (mmr >= keys[i]) {
+          index = i;
+          break;
+        }
+      }
+      return {
+        key: Object.keys(this.TierList)[index],
+        value: Object.keys(this.Tier)[index]
+      };
+    }
+  },
+  computed: {
+    tierImage() {
+      let mmr = this.userSearchList[0].userStats[0].stat.mmr;
+      return this.findTierKey(mmr).key;
+    },
+    tierName() {
+      let mmr = this.userSearchList[0].userStats[0].stat.mmr;
+      return this.findTierKey(mmr).value;
     }
   },
   props:{
@@ -110,8 +130,8 @@ export default {
   components:{
     MainSearchRecordVue,
   }
-
 }
+
 </script>
 
 <style>

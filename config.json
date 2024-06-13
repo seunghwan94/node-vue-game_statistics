@@ -14,6 +14,14 @@
         "https://cdn.dak.gg/er/images/tier/full/7.png": "데미갓",
         "https://cdn.dak.gg/er/images/tier/full/8.png": "이터니티"
       },
+    "Tier": {
+        "아이언": 800,
+        "브론즈": 1600,
+        "실버": 2600,
+        "골드": 3800,
+        "플래티넘": 5200,
+        "다이아몬드": 6800
+      },
     "Character" : {
         "재키": "Jackie",
         "아야": "Aya",
