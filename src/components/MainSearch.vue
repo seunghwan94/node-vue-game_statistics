@@ -1,16 +1,16 @@
 <template>
-  <div class="search-contain">
+  <div class="search-contain">{{ GameList }}
     <div class="search-header">
-      <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv ((레벨))</div>
-      <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].nickname }}</div>
-      <div style="font-size: 14px;">정규 시즌 {{ userSearchList[0].seasonId }}</div>
+      <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div>
+      <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].userStats[0].stat.nickname }}</div>
+      <div style="font-size: 14px;">정규 시즌 {{ userSearchList[0].userStats[0].stat.seasonId }}</div>
     </div>
     <div class="search-body">
       <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;margin-bottom: 15px;">
         <div style="margin-right: 20px;"><img :src="tierImages[8]" style="width: 40px;padding: 0px;border-radius:50%;"/></div>
         <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
           <div>랭크</div>
-          <div>{{ userSearchList[0].mmr }} RP</div>
+          <div>{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
           <div>((티어))</div>
           <div>((순위)) 위</div>
         </div>
@@ -26,7 +26,8 @@
         <button class="button-tab" :class="is_button==2? 'button-select':''" @click="is_button=2">일 반</button>
       </div>
       <hr/>
-      <MainSearchRecordVue v-for="(a) in ['','','','','','','','','','']" :key="a"/>
+      <MainSearchRecordVue v-for="(datalist,index) in GameList" :key="index" :datalist="datalist" />
+
     </div>
   </div>
 </template>
@@ -41,6 +42,7 @@ export default {
     return {
       is_button: 0,
       userId: '',
+      GameList:[],
       tierImages: [
           'https://cdn.dak.gg/er/images/tier/full/1.png',
           'https://cdn.dak.gg/er/images/tier/full/2.png',
@@ -87,7 +89,8 @@ export default {
     }
   },
   mounted(){
-    this.createChart()
+    this.createChart();
+    this.gameListadd();
   },
   methods:{
     createChart(){
@@ -96,7 +99,9 @@ export default {
         data:this.data,
         options:this.options
       })
-
+    },
+    gameListadd(){
+      this.GameList=this.userSearchList[0].userGames;
     }
   },
   props:{
