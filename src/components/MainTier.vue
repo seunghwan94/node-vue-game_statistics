@@ -5,13 +5,13 @@
         <div>랭크 티어 정보</div>
         <hr style="width:100%"/>
         <div class="tier-body">
-          <template v-for="(image, index) in tierImages" :key="index">
+          <template v-for="(tierArray, index ) in Object.entries(TierList)" :key="index">
             <div class="tier-item">
-              <img class="tier-img" :src="image" style="padding-bottom: 0px;"/>
-              <div style="font-weight: bold;">{{ tierTexts[image] }}</div>
+              <img class="tier-img" :src="tierArray[0]" style="padding-bottom: 0px;"/>
+              <div style="font-weight: bold;">{{ tierArray[1] }}</div>
             </div>
             <div>
-              <font-awesome-icon v-if="index < tierImages.length - 1" :icon="['fas', 'arrow-right']" />
+              <font-awesome-icon v-if="index < Object.keys(this.TierList).length - 1" :icon="['fas', 'arrow-right']" />
             </div>
           </template>
         </div>
@@ -23,8 +23,8 @@
         <div class="tier-sub-text">II</div>→
         <div class="tier-sub-text">I</div>
       </div>
-      <div class="tier-title" style="margin-top: 40px;">티어값</div>
-      <div style="width: 100%;">
+      <div class="tier-title" style="margin-top: 40px;">티어 범위</div>
+      <div style="width: 100%; margin-bottom: 20px;">
         <table style="height: 616px; width: 100%;" border="1">
             <tbody>
                 <tr style="height: 22px;">
@@ -34,7 +34,7 @@
                     <td style="width: 26.7857%; height: 22px;">&nbsp;입장료(2인 사전 구성팀)</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="tierImages[0]" style="padding: 0px;"/><div class="tier-text">아이언</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="Object.entries(this.TierList)[0][0]" style="padding: 0px;"/><div class="tier-text">아이언</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">4</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">0 ~ 199</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 88px;" rowspan="4">0</td>
@@ -53,7 +53,7 @@
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">600 ~ 799</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="tierImages[1]" style="padding: 0px;"/><div class="tier-text">브론즈</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="Object.entries(this.TierList)[1][0]" style="padding: 0px;"/><div class="tier-text">브론즈</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">4</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">800 ~ 999</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">10</td>
@@ -78,7 +78,7 @@
                     <td style="width: 26.7857%; height: 22px;">&nbsp;</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="tierImages[2]" style="padding: 0px;"/><div class="tier-text">실버</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="Object.entries(this.TierList)[2][0]" style="padding: 0px;"/><div class="tier-text">실버</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">4</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">1600 ~ 1849</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">18</td>
@@ -103,7 +103,7 @@
                     <td class="wysiwyg-text-align-center" style="width: 26.7857%; height: 22px;"><span class="wysiwyg-color-pink110"><strong>+ 2</strong></span></td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="tierImages[3]" style="padding: 0px;"/><div class="tier-text">골드</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="Object.entries(this.TierList)[3][0]" style="padding: 0px;"/><div class="tier-text">골드</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">4</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">2600 ~ 2899</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">26</td>
@@ -128,7 +128,7 @@
                     <td class="wysiwyg-text-align-center" style="width: 26.7857%; height: 22px;"><strong><span class="wysiwyg-color-red90">+ 3</span></strong></td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="tierImages[4]" style="padding: 0px;"/><div class="tier-text">플레티넘</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="Object.entries(this.TierList)[4][0]" style="padding: 0px;"/><div class="tier-text">플레티넘</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">4</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">3800 ~ 4149</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">34</td>
@@ -153,7 +153,7 @@
                     <td class="wysiwyg-text-align-center" style="width: 26.7857%; height: 22px;"><strong><span class="wysiwyg-color-green110">+ 4</span></strong></td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="tierImages[5]" style="padding: 0px;"/><div class="tier-text">다이아몬드</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 88px;" rowspan="4"><img class="tier-img" :src="Object.entries(this.TierList)[5][0]" style="padding: 0px;"/><div class="tier-text">다이아몬드</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">4</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">5200 ~ 5599</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">43</td>
@@ -178,21 +178,21 @@
                     <td class="wysiwyg-text-align-center" style="width: 26.7857%; height: 22px;">&nbsp;</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="tierImages[6]" style="padding: 0px;"/><div class="tier-text">미스릴</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="Object.entries(this.TierList)[6][0]" style="padding: 0px;"/><div class="tier-text">미스릴</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">10</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">6800 ~</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">53 +</td>
                     <td style="width: 26.7857%; height: 22px;">&nbsp;</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="tierImages[7]" style="padding: 0px;"/><div class="tier-text">데미갓</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="Object.entries(this.TierList)[7][0]" style="padding: 0px;"/><div class="tier-text">데미갓</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">10</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">미스릴 상위 700위 이내</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">&nbsp;</td>
                     <td style="width: 26.7857%; height: 22px;">&nbsp;</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="tierImages[8]" style="padding: 0px;"/><div class="tier-text">아이언</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="Object.entries(this.TierList)[8][0]" style="padding: 0px;"/><div class="tier-text">아이언</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">10</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">미스릴 상위 200위 이내</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">(RP 250점 당 2점 추가)</td>
@@ -205,31 +205,11 @@
   </template>
   
   <script>
+  import { TierList} from '../../config.json'
   export default {
     data() {
       return {
-        tierImages: [
-          'https://cdn.dak.gg/er/images/tier/full/1.png',
-          'https://cdn.dak.gg/er/images/tier/full/2.png',
-          'https://cdn.dak.gg/er/images/tier/full/3.png',
-          'https://cdn.dak.gg/er/images/tier/full/4.png',
-          'https://cdn.dak.gg/er/images/tier/full/5.png',
-          'https://cdn.dak.gg/er/images/tier/full/6.png',
-          'https://cdn.dak.gg/er/images/tier/full/66.png',
-          'https://cdn.dak.gg/er/images/tier/full/7.png',
-          'https://cdn.dak.gg/er/images/tier/full/8.png'
-        ],
-        tierTexts: {
-          'https://cdn.dak.gg/er/images/tier/full/1.png': '아이언',
-          'https://cdn.dak.gg/er/images/tier/full/2.png': '브론즈',
-          'https://cdn.dak.gg/er/images/tier/full/3.png': '실버',
-          'https://cdn.dak.gg/er/images/tier/full/4.png': '골드',
-          'https://cdn.dak.gg/er/images/tier/full/5.png': '플래티넘',
-          'https://cdn.dak.gg/er/images/tier/full/6.png': '다이아몬드',
-          'https://cdn.dak.gg/er/images/tier/full/66.png': '미스릴',
-          'https://cdn.dak.gg/er/images/tier/full/7.png': '데미갓',
-          'https://cdn.dak.gg/er/images/tier/full/8.png': '이터니티'
-        }
+        TierList:TierList,
       };
     }
   }
@@ -237,7 +217,6 @@
   
   <style>
   .tier-contain {
-    height: 80vh;
     width: 55%;
     display: flex;
     flex-direction: column;

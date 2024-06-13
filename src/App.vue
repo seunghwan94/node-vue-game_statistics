@@ -9,26 +9,26 @@
       <div class="header-menu">
         <div class="header-menu-list" @click="is_main=0">전적</div>
         <div class="header-menu-list" @click="is_main=2">티어</div>
-        <div class="header-menu-list" @click="is_main=3">창</div>
+        <div class="header-menu-list" @click="is_main=3">실험체</div>
       </div> 
     </div>
     <!-- 전적 -->
     <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
       <MainView @Search="Search" />
     </div>
-    <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;height:100vh">
+    <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;">
       <MainSearch :userSearchList="userSearchList"/>
     </div>
     <!-- 티어 -->
-    <div v-if="is_main==2" class="main-body" style="display: flex;justify-content: center;height:100vh">
+    <div v-if="is_main==2" class="main-body" style="display: flex;justify-content: center;">
       <MainTier />
     </div>
     <!-- 창 -->
-    <div v-if="is_main==3" class="main-body" style="display: flex;justify-content: center;height:100vh">
-      <MainTier />
+    <div v-if="is_main==3" class="main-body" style="display: flex;justify-content: center;">
+      <MainCharcter />
     </div>
 
-    <div v-if="is_main==0" class="main-footer">
+    <div class="main-footer">
       <MainFooter />
     </div>
   </div>
@@ -40,14 +40,16 @@ import MainView from './components/MainView.vue';
 import MainFooter from './components/MainFooter.vue';
 import MainSearch from './components/MainSearch.vue';
 import MainTier from './components/MainTier.vue';
+import MainCharcter from './components/MainCharcter.vue';
 import axios from 'axios';
 import {Server} from '../config.json'
+
 
 export default {
   name: 'App',
   data() {
     return {
-      is_main: 3,
+      is_main: 0,
       userId: '',
       userSearchList: [],
     };
@@ -70,6 +72,7 @@ export default {
     MainFooter,
     MainSearch,
     MainTier,
+    MainCharcter,
   }
 }
 </script>

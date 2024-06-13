@@ -7,7 +7,7 @@
     </div>
     <div class="search-body">
       <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;margin-bottom: 15px;">
-        <div style="margin-right: 20px;">((랭크 이미지))</div>
+        <div style="margin-right: 20px;"><img :src="tierImages[8]" style="width: 40px;padding: 0px;border-radius:50%;"/></div>
         <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
           <div>랭크</div>
           <div>{{ userSearchList[0].mmr }} RP</div>
@@ -41,6 +41,17 @@ export default {
     return {
       is_button: 0,
       userId: '',
+      tierImages: [
+          'https://cdn.dak.gg/er/images/tier/full/1.png',
+          'https://cdn.dak.gg/er/images/tier/full/2.png',
+          'https://cdn.dak.gg/er/images/tier/full/3.png',
+          'https://cdn.dak.gg/er/images/tier/full/4.png',
+          'https://cdn.dak.gg/er/images/tier/full/5.png',
+          'https://cdn.dak.gg/er/images/tier/full/6.png',
+          'https://cdn.dak.gg/er/images/tier/full/66.png',
+          'https://cdn.dak.gg/er/images/tier/full/7.png',
+          'https://cdn.dak.gg/er/images/tier/full/8.png'
+        ],
       type: 'bar',
       data: {
         labels: [ 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange' ],
@@ -100,7 +111,6 @@ export default {
 
 <style>
 .search-contain {
-  height: 80vh;
   width: 55%;
   display: flex;
   flex-direction: column;
