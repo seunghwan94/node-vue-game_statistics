@@ -34,13 +34,14 @@ app.get('/', async (req, res) => {
             const characterNum = game.characterNum;
             const deaths = game.playerDeaths;
             const kda = deaths === 0 ? (game.playerKill + game.playerAssistant) : ((game.playerKill + game.playerAssistant) / deaths).toFixed(2);
-            
+            const skinCode = String(game.skinCode).slice(-3);
+            const skinUrl = "https://cdn.dak.gg/assets/er/game-assets/1.23.0/CharProfile_"+config.character_en[characterNum]+"_S"+skinCode+".png";
             return {
                 accountLevel: game.accountLevel, // 계정 레벨
                 matchingMode: game.matchingMode, // 2:일반, 3:랭크
                 playTime: game.playTime,// 플레이 시간 (ex 14분 54초 -> 1454)
                 characterName: config.character[characterNum],// 캐릭터 이름
-                skinCode: game.skinCode,// 사용한 스킨
+                skinUrl,// 사용한 스킨
                 gameRank: game.gameRank,// 최종 등수.
                 characterLevel: game.characterLevel,// 최종 레벨
                 teamKill: game.teamKill,// TK
