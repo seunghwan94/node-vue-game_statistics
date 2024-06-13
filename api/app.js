@@ -15,12 +15,22 @@ app.get('/', async (req, res) => {
         const uri1 = "user/nickname";
         const nickname = '찢어진니키의장갑';
         const userNumJson = await func.axios_req(uri1, nickname);
+
+        if (!userNumJson || !userNumJson.user || !userNumJson.user.userNum) {
+            return res.json({ message: 'user number not found' });
+        }
+
         const userNum = String(userNumJson.user.userNum);
 
         //사용자 현재 시즌 정보 가져오기
         const seasonId = "/25";
-        const uri2 = "user/stats/"+userNum+seasonId;
+        const uri2 = `user/stats/${userNum}${seasonId}`;
         const userStatsJson = await func.axios_req(uri2);
+
+        if (!userStatsJson || !userStatsJson.userStats) {
+            return res.json({ message: 'user stats not found' });
+        }
+
         const userStats = userStatsJson.userStats.map(stat => {
             return {
                 stat
@@ -28,14 +38,19 @@ app.get('/', async (req, res) => {
         });
 
         //사용자 최근 매칭 데이터 가져오기
-        const uri3 = "user/games/"+userNum;
+        const uri3 = `user/games/${userNum}`;
         const userGamesJson = await func.axios_req(uri3);
+
+        if (!userGamesJson || !userGamesJson.userGames) {
+            return res.json({ message: 'user games not found' });
+        }
+
         const userGames = userGamesJson.userGames.map(game => {
             const characterNum = game.characterNum;
             const deaths = game.playerDeaths;
             const kda = deaths === 0 ? (game.playerKill + game.playerAssistant) : ((game.playerKill + game.playerAssistant) / deaths).toFixed(2);
             const skinCode = String(game.skinCode).slice(-3);
-            const skinUrl = "https://cdn.dak.gg/assets/er/game-assets/1.23.0/CharProfile_"+config.character_en[characterNum]+"_S"+skinCode+".png";
+            const skinUrl = `https://cdn.dak.gg/assets/er/game-assets/1.23.0/CharProfile_${config.character_en[characterNum]}_S${skinCode}.png`;
             return {
                 accountLevel: game.accountLevel, // 계정 레벨
                 matchingMode: game.matchingMode, // 2:일반, 3:랭크
