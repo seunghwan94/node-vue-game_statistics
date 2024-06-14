@@ -16,7 +16,7 @@
     <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
       <MainView @Search="Search" />
     </div>
-    <div v-if="is_main==1 && userSearchList" class="main-body" style="display: flex; justify-content: center;">
+    <div v-if="is_main==1" class="main-body" style="display: flex; justify-content: center;">
       <MainSearch :userSearchList="userSearchList"/>
     </div>
     <!-- <div v-else class="main-body" style="display: flex; justify-content: center;">
@@ -63,6 +63,7 @@ export default {
         params: {userId}
       }).then(res => {
         console.log(res.data);
+        // if(res.data.message=='user number not found' || res.data.message=='user stats not found'){
         if(res.data.message=='user number not found'){
           alert('최근 전적이 없거나 아이디가 없습니다.');
         }else{

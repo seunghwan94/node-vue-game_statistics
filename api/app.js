@@ -27,15 +27,21 @@ app.get('/', async (req, res) => {
         const uri2 = `user/stats/${userNum}${seasonId}`;
         const userStatsJson = await func.axios_req(uri2);
 
-        if (!userStatsJson || !userStatsJson.userStats) {
-            return res.json({ message: 'user stats not found' });
-        }
 
-        const userStats = userStatsJson.userStats.map(stat => {
-            return {
-                stat
-            };
-        });
+        // if (!userStatsJson || !userStatsJson.userStats) {
+        //     return res.json({ message: 'user stats not found' });
+        // }
+        var userStats='';
+
+        try{
+            userStats = userStatsJson.userStats.map(stat => {
+                return {
+                    stat
+                };
+            });
+        } catch (error) {
+            userStats = { 'nickname': nickname };
+        }
 
         //사용자 최근 매칭 데이터 가져오기
         const uri3 = `user/games/${userNum}`;

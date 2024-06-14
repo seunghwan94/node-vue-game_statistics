@@ -1,10 +1,16 @@
 <template>
   <div class="search-contain">
-    <div class="search-header">
+    <div v-if="!userSearchList[0].userStats.nickname" class="search-header">
       <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div>
       <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].userStats[0].stat.nickname }}</div>
       <div style="font-size: 14px;">정규 시즌 {{ userSearchList[0].userStats[0].stat.seasonId }}</div>
     </div>
+    <div v-else class="search-header">
+      <div style="font-weight: bold">{{userSearchList[0].userStats.nickname}}님</div>
+      <div> </div>
+      <div>해당 유저는 이번시즌에 플레이한 기록이 없습니다</div>
+    </div>
+
     <div class="search-body">
       <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;margin-bottom: 15px;">
         <div style="margin-right: 20px;">
@@ -12,15 +18,14 @@
         </div>
         <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
           <div>랭크</div>
-          <div>{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
+          <!-- <div>{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
           <div>{{ tierName }}</div>
-          <div>{{ userSearchList[0].userStats[0].stat.rank }} 위</div>
+          <div>{{ userSearchList[0].userStats[0].stat.rank }} 위</div> -->
         </div>
       </div>
       <hr/>
       <canvas ref="MyChart"></canvas>
     </div>
-    {{ChartData}}
     <div class="search-main">
       <p>최근 10매치 요약</p>
       <div style="display: flex;justify-content: space-around;width: 100%;"> 
@@ -146,18 +151,18 @@ export default {
       }
     }
   },
-  computed: {
-    tierImage() {
-      let mmr = this.userSearchList[0].userStats[0].stat.mmr;
-      let rank = this.userSearchList[0].userStats[0].stat.rank;
-      return this.findTierKey(mmr,rank).key;
-    },
-    tierName() {
-      let mmr = this.userSearchList[0].userStats[0].stat.mmr;
-      let rank = this.userSearchList[0].userStats[0].stat.rank;
-      return this.findTierKey(mmr,rank).value;
-    }
-  },
+  // computed: {
+  //   tierImage() {
+  //     let mmr = this.userSearchList[0].userStats[0].stat.mmr;
+  //     let rank = this.userSearchList[0].userStats[0].stat.rank;
+  //     return this.findTierKey(mmr,rank).key;
+  //   },
+  //   tierName() {
+  //     let mmr = this.userSearchList[0].userStats[0].stat.mmr;
+  //     let rank = this.userSearchList[0].userStats[0].stat.rank;
+  //     return this.findTierKey(mmr,rank).value;
+  //   }
+  // },
   props:{
     userSearchList:Object,
   },
