@@ -55,9 +55,9 @@ export default {
     };
   },
   methods: {
-    Search() {
+    Search(userId) {
       axios.get(`${Server.host}:${Server.port}/`, {
-        userId: this.userId
+        params: {userId}
       }).then(res => {
         console.log(res.data);
         this.userSearchList.push(res.data);

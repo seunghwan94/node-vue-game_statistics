@@ -13,7 +13,7 @@ app.get('/', async (req, res) => {
     try {
         //사용자 넘버 가져오기
         const uri1 = "user/nickname";
-        const nickname = '찢어진니키의장갑';
+        const nickname = req.query.userId;
         const userNumJson = await func.axios_req(uri1, nickname);
 
         if (!userNumJson || !userNumJson.user || !userNumJson.user.userNum) {
