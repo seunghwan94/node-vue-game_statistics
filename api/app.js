@@ -27,10 +27,6 @@ app.get('/', async (req, res) => {
         const uri2 = `user/stats/${userNum}${seasonId}`;
         const userStatsJson = await func.axios_req(uri2);
 
-
-        // if (!userStatsJson || !userStatsJson.userStats) {
-        //     return res.json({ message: 'user stats not found' });
-        // }
         var userStats='';
 
         try{
@@ -81,8 +77,6 @@ app.get('/', async (req, res) => {
         if (!lotationJson || !lotationJson.freeCharacters) {
             return res.json({ message: 'free characters not found' });
         }
-
-        const lotaion = lotationJson.freeCharacters;
 
         const response = {
             userStats,
