@@ -69,24 +69,34 @@ app.get('/', async (req, res) => {
 
         const accountLevel = userGames.length > 0 ? userGames[0].accountLevel : "판수가 부족합니다.";
 
-        const uri4 = `freeCharacters/2`;
-        const lotationJson = await func.axios_req(uri4);
+        const response = {
+            userStats,
+            userGames,
+            accountLevel
+        };
+
+        res.json(response);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+// 로테이션 캐릭터 불러오기
+app.get('/lotation', async (req, res) => {
+    try {
+        const uri = `freeCharacters/2`;
+        const lotationJson = await func.axios_req(uri);
 
         if (!lotationJson || !lotationJson.freeCharacters) {
             return res.json({ message: 'free characters not found' });
         }
 
-        const lotaion = lotationJson.freeCharacters;
-
-        const response = {
-            userStats,
-            userGames,
-            accountLevel,
-            lotaion
-        };
+        const response = lotationJson.freeCharacters;
 
         res.json(response);
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
