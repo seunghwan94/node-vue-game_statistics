@@ -192,7 +192,7 @@
                     <td class="wysiwyg-text-align-center" style="width: 26.7857%; height: 22px;">&nbsp;</td>
                 </tr>
                 <tr style="height: 22px;">
-                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="Object.entries(this.TierList)[8][0]" style="padding: 0px;"/><div class="tier-text">아이언</div></td>
+                    <td class="wysiwyg-text-align-center" style="width: 12.991%; height: 22px;"><img class="tier-img" :src="Object.entries(this.TierList)[8][0]" style="padding: 0px;"/><div class="tier-text">이터니티</div></td>
                     <td class="wysiwyg-text-align-center" style="width: 6.79212%; height: 22px;">10</td>
                     <td class="wysiwyg-text-align-center" style="width: 26.0354%; height: 22px;">미스릴 상위 200위 이내</td>
                     <td class="wysiwyg-text-align-center" style="width: 28.9503%; height: 22px;">(RP 250점 당 2점 추가)</td>

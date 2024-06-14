@@ -2,12 +2,22 @@
     <div class="tier-contain">
       <div class="tier-title">실험체</div>
       <div class="tier-main">
+        <div>로테이션</div>
+        <hr style="width:100%"/>
+        <div class="tier-body">
+          <template v-for="(CharacterArray, index ) in Object.entries(Character)" :key="index">
+            <div v-if="로테이션.includes(index)" class="tier-item">
+              <img class="tier-img" :src="`https://cdn.dak.gg/assets/er/game-assets/1.23.0/CharCommunity_${CharacterArray[1]}_S000.png`" style="padding-bottom: 0px;"/>
+              <div style="font-weight: bold;">{{ CharacterArray[0] }}</div>
+            </div>
+          </template>
+        </div>     
+
         <div>실험체 목록</div>
         <hr style="width:100%"/>
         <div class="tier-body">
           <template v-for="(CharacterArray, index ) in Object.entries(Character)" :key="index">
             <div class="tier-item">
-                <!-- {{CharacterArray}} -->
               <img class="tier-img" :src="`https://cdn.dak.gg/assets/er/game-assets/1.23.0/CharCommunity_${CharacterArray[1]}_S000.png`" style="padding-bottom: 0px;"/>
               <div style="font-weight: bold;">{{ CharacterArray[0] }}</div>
             </div>
@@ -18,13 +28,32 @@
   </template>
   
   <script>
-  import { Character } from '../../config.json'
+  import { Character,Server } from '../../config.json'
+  import axios from 'axios'
 
   export default {
     data() {
       return {
         Character:Character,
+        로테이션:[],
       };
+    },
+    mounted(){
+      this.load()
+    },
+    methods:{
+      load(){
+        axios.get(`${Server.host}:${Server.port}/`, {
+        }).then(res => {
+          console.log(res.data);
+          this.로테이션.push(1,2,5);
+          // this.로테이션.push(res.data);
+          // this.is_main=1;
+        }).catch(err => {
+          console.error(err);
+        });
+          
+      }
     }
   }
   </script>

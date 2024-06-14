@@ -14,12 +14,13 @@
           <div>랭크</div>
           <div>{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
           <div>{{ tierName }}</div>
-          <div>((순위)) 위</div>
+          <div>{{ userSearchList[0].userStats[0].stat.rank }} 위</div>
         </div>
       </div>
       <hr/>
       <canvas ref="MyChart"></canvas>
     </div>
+    {{ChartData}}
     <div class="search-main">
       <p>최근 10매치 요약</p>
       <div style="display: flex;justify-content: space-around;width: 100%;"> 
@@ -28,7 +29,19 @@
         <button class="button-tab" :class="is_button==2? 'button-select':''" @click="is_button=2">일 반</button>
       </div>
       <hr/>
-      <MainSearchRecordVue v-for="(datalist,index) in GameList" :key="index" :datalist="datalist" />
+      <div v-if="is_button==0" style="width: 100%;">
+        <MainSearchRecordVue v-for="(datalist,index) in GameList" :key="index" :datalist="datalist" />
+      </div>
+      <div v-if="is_button==1" style="width: 100%;">
+        <div v-for="(datalist,index) in GameList" :key="index">
+          <MainSearchRecordVue v-if="datalist.matchingMode==3" :datalist="datalist" />
+        </div>
+      </div>
+      <div v-if="is_button==2" style="width: 100%;">
+        <div v-for="(datalist,index) in GameList" :key="index">
+          <MainSearchRecordVue v-if="datalist.matchingMode==2" :datalist="datalist" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -46,33 +59,22 @@ export default {
       is_button: 0,
       userId: '',
       GameList:[],
+      ChartDataDamage:[],
+      ChartDataTime:[],
 
       TierList: config.TierList,
       Tier: config.Tier,
 
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: [ 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange' ],
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
-          label: '# ((뭐넣을지 고민))',
-          data: [ 12, 19, 3, 5, 2, 3 ],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          label: '# 플레이 마다 넣은 딜량',
+          data: this.ChartData,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Update to a single color if desired
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          fill: false // To not fill the area under the line
         }]
       },
       options: {
@@ -85,43 +87,75 @@ export default {
     }
   },
   mounted(){
-    this.createChart();
     this.gameListadd();
+    this.createChart();
   },
   methods:{
-    createChart(){
+    createChart() {
       new Chart(this.$refs.MyChart, {
-        type:'bar',
-        data:this.data,
-        options:this.options
-      })
+        type: 'line', // Change this from 'bar' to 'line'
+        data: this.data,
+        options: this.options
+      });
     },
-    gameListadd(){
-      this.GameList=this.userSearchList[0].userGames;
+    gameListadd() {
+      this.GameList = this.userSearchList[0].userGames;
+
+      // ChartData 초기화
+      this.ChartDataDamage = [];
+      this.ChartDataTime = [];
+
+      // userGames 배열을 반복하면서 damageToPlayer와 게임 시간을 ChartData에 추가
+      this.userSearchList[0].userGames.forEach(game => {
+        this.ChartDataDamage.push(game.damageToPlayer);
+        this.ChartDataTime.push(game.characterName); // playTime을 게임 시간 데이터로 가정
+      });
+
+      // Chart 데이터셋과 labels 업데이트
+      this.data.datasets[0].data = this.ChartDataDamage;
+      this.data.labels = this.ChartDataTime;
     },
-    findTierKey(mmr) {
-      let keys = Object.values(this.Tier);
-      let index = 0;
-      for (let i = keys.length - 1; i >= 0; i--) {
-        if (mmr >= keys[i]) {
-          index = i;
-          break;
+
+    findTierKey(mmr,rank) {
+      
+      if(rank <= 700){
+        if(rank <= 200){
+          return {
+            key: Object.keys(this.TierList)[8],
+            value: Object.keys(this.Tier)[8]
+          }
+        }else{
+          return {
+            key: Object.keys(this.TierList)[7],
+            value: Object.keys(this.Tier)[7]
+          }
         }
+      }else{
+        let keys = Object.values(this.Tier);
+        let index = 0;
+        for (let i = keys.length - 1; i >= 0; i--) {
+          if (mmr >= keys[i]) {
+            index = i;
+            break;
+          }
+        }
+        return {
+          key: Object.keys(this.TierList)[index],
+          value: Object.keys(this.Tier)[index]
+        };
       }
-      return {
-        key: Object.keys(this.TierList)[index],
-        value: Object.keys(this.Tier)[index]
-      };
     }
   },
   computed: {
     tierImage() {
       let mmr = this.userSearchList[0].userStats[0].stat.mmr;
-      return this.findTierKey(mmr).key;
+      let rank = this.userSearchList[0].userStats[0].stat.rank;
+      return this.findTierKey(mmr,rank).key;
     },
     tierName() {
       let mmr = this.userSearchList[0].userStats[0].stat.mmr;
-      return this.findTierKey(mmr).value;
+      let rank = this.userSearchList[0].userStats[0].stat.rank;
+      return this.findTierKey(mmr,rank).value;
     }
   },
   props:{

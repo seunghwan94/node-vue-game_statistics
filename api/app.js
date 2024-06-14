@@ -13,7 +13,7 @@ app.get('/', async (req, res) => {
     try {
         //사용자 넘버 가져오기
         const uri1 = "user/nickname";
-        const nickname = '한동그라미';
+        const nickname = '찢어진니키의장갑';
         const userNumJson = await func.axios_req(uri1, nickname);
 
         if (!userNumJson || !userNumJson.user || !userNumJson.user.userNum) {
@@ -68,21 +68,11 @@ app.get('/', async (req, res) => {
         });
 
         const accountLevel = userGames.length > 0 ? userGames[0].accountLevel : "판수가 부족합니다.";
-
-        const uri4 = `freeCharacters/2`;
-        const lotationJson = await func.axios_req(uri4);
-
-        if (!lotationJson || !lotationJson.freeCharacters) {
-            return res.json({ message: 'free characters not found' });
-        }
-
-        const lotaion = lotationJson.freeCharacters;
-
+        
         const response = {
             userStats,
             userGames,
-            accountLevel,
-            lotaion
+            accountLevel
         };
 
         res.json(response);
