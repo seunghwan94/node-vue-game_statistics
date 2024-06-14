@@ -16,9 +16,12 @@
     <div v-if="is_main==0" class="main-body" style="height: calc(100vh - 213px);">
       <MainView @Search="Search" />
     </div>
-    <div v-if="is_main==1" class="main-body" style="display: flex;justify-content: center;">
+    <div v-if="is_main==1 && userSearchList" class="main-body" style="display: flex; justify-content: center;">
       <MainSearch :userSearchList="userSearchList"/>
     </div>
+    <!-- <div v-else class="main-body" style="display: flex; justify-content: center;">
+      ttt
+    </div> -->
     <!-- 티어 -->
     <div v-if="is_main==2" class="main-body" style="display: flex;justify-content: center;">
       <MainTier />
@@ -60,10 +63,16 @@ export default {
         params: {userId}
       }).then(res => {
         console.log(res.data);
-        this.userSearchList.push(res.data);
-        this.is_main=1;
+        if(res.data.message=='user number not found'){
+          alert('최근 전적이 없거나 아이디가 없습니다.');
+        }else{
+          this.userSearchList=[];
+          this.userSearchList.push(res.data);
+          this.is_main=1;
+        }
       }).catch(err => {
         console.error(err);
+        this.is_main=1;
       });
     }
   },
