@@ -1,5 +1,5 @@
 <template>
-    <div class="main-search-recode">
+    <div class="main-search-recode" :style="{ backgroundImage: 'url(' + openimg() + ')' }">
         <div>{{ datalist.matchingMode === 2 ? '일반' : '랭크' }} {{ formatTime(datalist.playTime) }}</div>
         <hr/>
         <div style="display:flex;width:100%;justify-content: space-between;align-items: center;">
@@ -50,7 +50,15 @@ export default {
         const hours = Math.floor(time / 100); // 시간
         const minutes = time % 100; // 분
         return `${hours} : ${minutes < 10 ? '0' + minutes : minutes}`;
-        }
+        },
+        openimg(){
+            const characterName = this.datalist.characterName;
+            const keys = Object.keys(Character);
+            const index = keys.indexOf(characterName) + 1;
+            const paddedIndex = index.toString().padStart(3, '0');
+
+            return 'https://cdn.dak.gg/er/images/character/background/bg_char' + paddedIndex + '.jpg';
+        },
     }
 }
 </script>
@@ -64,5 +72,6 @@ export default {
     align-items: flex-start;
     padding: 10px;
     margin: 10px 0;
+    /* background: url('https://cdn.dak.gg/er/images/character/background/bg_char047.jpg'); */
 }
 </style>

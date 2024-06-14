@@ -1,39 +1,44 @@
 <template>
   <div class="search-contain">
-    <div v-if="!userSearchList[0].userStats.nickname" class="search-header">
-      <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div>
-      <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].userStats[0].stat.nickname }}</div>
-      <div style="font-size: 14px;">정규 시즌 {{ userSearchList[0].userStats[0].stat.seasonId }}</div>
-    </div>
-    <div v-else class="search-header">
-      <div style="font-weight: bold">{{userSearchList[0].userStats.nickname}}님</div>
-      <div> </div>
-      <div>해당 유저는 이번시즌에 플레이한 기록이 없습니다</div>
-    </div>
-
-    <div class="search-body">
-      <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;margin-bottom: 15px;">
-        <div style="margin-right: 20px;">
-          <img :src="tierImage" style="width: 40px;padding: 0px;border-radius:50%;"/>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
-          <div>랭크</div>
-          <!-- <div>{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
-          <div>{{ tierName }}</div>
-          <div>{{ userSearchList[0].userStats[0].stat.rank }} 위</div> -->
+    <div v-if="!userSearchList[0].userStats.nickname" class="search-header" :style="{ backgroundImage: 'url(' + openimg() + ')' }">
+    <!-- <div v-if="!userSearchList[0].userStats.nickname" class="search-header"> -->
+      <div>
+        <div style="font-size: 17px;margin-bottom: 5px;  border: 2px solid gray; border-radius: 20px;padding:5px">Lv {{ userSearchList[0].userGames[0].accountLevel }}</div>
+        <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">{{ userSearchList[0].userStats[0].stat.nickname }}</div>
+        <div style="font-size: 14px;">정규 시즌 {{ userSearchList[0].userStats[0].stat.seasonId }}</div>
+      </div>
+      <div>
+        <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;margin-bottom: 15px;">
+          <div style="margin-right: 20px;">
+            <img :src="tierImage" style="width: 40px;padding: 0px;border-radius:50%;"/>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-start; width: 55%;">
+            <div >랭크</div>
+            <div >{{ userSearchList[0].userStats[0].stat.mmr }} RP</div>
+            <div >{{ tierName }}</div>
+            <div >{{ userSearchList[0].userStats[0].stat.rank }} 위</div>
+          </div>
         </div>
       </div>
-      <hr/>
+    </div>
+    <div v-else class="search-header" :style="{ backgroundImage: 'url(' + openimg() + ')' }">
+      <div style="font-weight: bold">{{userSearchList[0].userStats.nickname}} 님</div>
+      <div> </div>
+      <div >해당 유저는 이번시즌에 플레이한 기록이 없습니다</div>
+    </div>
+    <div v-if="!userSearchList[0].userStats.nickname" class="search-body">
       <canvas ref="MyChart"></canvas>
     </div>
+
     <div class="search-main">
-      <p>최근 10매치 요약</p>
+      <p style="font-weight: bold;">최근 10매치 요약</p>
       <div style="display: flex;justify-content: space-around;width: 100%;"> 
         <button class="button-tab" :class="is_button==0? 'button-select':''" @click="is_button=0">전 체</button>
         <button class="button-tab" :class="is_button==1? 'button-select':''" @click="is_button=1">랭 크</button>
         <button class="button-tab" :class="is_button==2? 'button-select':''" @click="is_button=2">일 반</button>
       </div>
       <hr/>
+
       <div v-if="is_button==0" style="width: 100%;">
         <MainSearchRecordVue v-for="(datalist,index) in GameList" :key="index" :datalist="datalist" />
       </div>
@@ -69,6 +74,8 @@ export default {
 
       TierList: config.TierList,
       Tier: config.Tier,
+      Character: config.Character,
+
 
       type: 'line',
       data: {
@@ -96,6 +103,14 @@ export default {
     this.createChart();
   },
   methods:{
+    openimg(){
+      const characterName = this.userSearchList[0].userGames[0].characterName;
+      const keys = Object.keys(config.Character);
+      const index = keys.indexOf(characterName) + 1;
+      const paddedIndex = index.toString().padStart(3, '0');
+
+      return 'https://cdn.dak.gg/er/images/character/background/bg_char' + paddedIndex + '.jpg';
+    },
     createChart() {
       new Chart(this.$refs.MyChart, {
         type: 'line', // Change this from 'bar' to 'line'
@@ -151,18 +166,18 @@ export default {
       }
     }
   },
-  // computed: {
-  //   tierImage() {
-  //     let mmr = this.userSearchList[0].userStats[0].stat.mmr;
-  //     let rank = this.userSearchList[0].userStats[0].stat.rank;
-  //     return this.findTierKey(mmr,rank).key;
-  //   },
-  //   tierName() {
-  //     let mmr = this.userSearchList[0].userStats[0].stat.mmr;
-  //     let rank = this.userSearchList[0].userStats[0].stat.rank;
-  //     return this.findTierKey(mmr,rank).value;
-  //   }
-  // },
+  computed: {
+    tierImage() {
+      let mmr = this.userSearchList[0].userStats[0].stat.mmr;
+      let rank = this.userSearchList[0].userStats[0].stat.rank;
+      return this.findTierKey(mmr,rank).key;
+    },
+    tierName() {
+      let mmr = this.userSearchList[0].userStats[0].stat.mmr;
+      let rank = this.userSearchList[0].userStats[0].stat.rank;
+      return this.findTierKey(mmr,rank).value;
+    }
+  },
   props:{
     userSearchList:Object,
   },
@@ -178,16 +193,16 @@ export default {
   width: 55%;
   display: flex;
   flex-direction: column;
-  background-color: rgb(136, 134, 134);
+  background-color: rgb(255, 255, 255);
   margin: 50px;
 }
 .search-header{
-  background: violet;
+
   display: flex;
   margin-bottom: 25px;
-  padding: 20px;
-  flex-direction: column;
+  padding: 50px 20px;
   align-items: flex-start;
+  justify-content: space-between;
 }
 .search-body, .search-main{
   background: white;
