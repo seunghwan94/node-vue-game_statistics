@@ -68,11 +68,21 @@ app.get('/', async (req, res) => {
         });
 
         const accountLevel = userGames.length > 0 ? userGames[0].accountLevel : "판수가 부족합니다.";
-        
+
+        const uri4 = `freeCharacters/2`;
+        const lotationJson = await func.axios_req(uri4);
+
+        if (!lotationJson || !lotationJson.freeCharacters) {
+            return res.json({ message: 'free characters not found' });
+        }
+
+        const lotaion = lotationJson.freeCharacters;
+
         const response = {
             userStats,
             userGames,
-            accountLevel
+            accountLevel,
+            lotaion
         };
 
         res.json(response);
