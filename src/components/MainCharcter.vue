@@ -43,7 +43,7 @@
     },
     methods:{
       load(){
-        axios.get(`${Server.host}:${Server.port}/`, {
+        axios.get(`${Server.host}:${Server.port}/lotation`, {
         }).then(res => {
           console.log(res.data);
           this.lotation.push(1,2,5);
