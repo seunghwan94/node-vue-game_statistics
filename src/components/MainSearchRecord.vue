@@ -1,6 +1,12 @@
 <template>
     <div class="main-search-recode" :style="{ backgroundImage: 'url(' + openimg() + ')' }">
-        <div>{{ datalist.matchingMode === 2 ? '일반' : '랭크' }} {{ formatTime(datalist.playTime) }}</div>
+        <div style="font-size: 14px;">
+            <span style="font-weight: bold;" v-bind:style="{color: 
+            datalist.gameRank === 1 ? 'red' :
+            datalist.gameRank === 2 || datalist.gameRank === 3 ? 'blue' : 'gray'
+            }">{{datalist.gameRank}}위</span>&nbsp;
+            {{ datalist.matchingMode === 2 ? '일반' : '랭크' }} {{ formatTime(datalist.playTime) }}
+        </div>
         <hr/>
         <div style="display:flex;width:100%;justify-content: space-between;align-items: center;">
             <div style="display: flex;align-items: center;">
@@ -8,26 +14,25 @@
                     <img class="tier-img" :src="`${datalist.skinUrl}`" style="padding-bottom: 0px;"/> <br/>{{ datalist.characterName }}
                 </div>
                 <div style="margin: 0 15px;">
-                    <div style="display: flex;font-weight: bold;margin-bottom: 10px;">Lv {{ datalist.characterLevel }}</div>
-                    <div > TK / K / A</div>
-                    <div style="font-weight: bold;">{{ datalist.teamKill }} / {{ datalist.playerKill }} / {{ datalist.playerAssistant }}</div>
+                    <div style="font-size: 14px;font-weight: bold;margin-bottom: 5px;">{{ datalist.teamKill }} / {{ datalist.playerKill }} / {{ datalist.playerAssistant }}</div>
+                    <div style="font-size: 12px;color: gray;margin-bottom: 5px;"> TK / K / A</div>
+                    <div>
+                        <div style="font-size: 12px;color: gray;">평점(KDA) <span style="font-weight: bold;color: black;">{{ datalist.kda }}</span></div>
+                    </div>
                 </div>
             </div>
             <div>
-                
             </div>
-            <div style="margin: 0 15px;display: flex;flex-direction: column;width: 25%;">
-                <div style="display: flex;justify-content: space-between;;align-items: center;">
-                    <div style="font-weight: bold">{{ datalist.gameRank }}</div> 
-                    <div style="font-size: 12px;color: gray;">등수</div>
+            <div style="margin: 0 15px;display: flex;flex-direction: column;width: 20%;font-size: 14px;">
+                <div style="display: flex;justify-content: flex-end;align-items: center;">
+                     <div style="display: flex;font-weight: bold;margin-bottom: 10px;">Lv {{ datalist.characterLevel }}</div>
                 </div>
                 <div style="display: flex;justify-content: space-between;;align-items: center;">
-                    <div style="font-weight: bold">{{ datalist.damageToPlayer }}</div> 
                     <div style="font-size: 12px;color: gray;">딜량</div>
+                    <div style="font-weight: bold">{{ datalist.damageToPlayer }}</div>
                 </div>
                 <div style="display: flex;justify-content: space-between;;align-items: center;">
-                    <div style="font-weight: bold;">{{ datalist.kda }}</div>
-                    <div style="font-size: 12px;color: gray;">평점(KDA)</div>
+                    
                 </div>
             </div>
         </div>
