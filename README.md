@@ -1,24 +1,13 @@
-# project
+# ER.gg
+op.gg를 보방한 이터널리턴 전용 ER.gg
 
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 서버 실행 (BackEnd, FrontEnd 실행해야 됨)
 ```
 npm run serve
+node api/server.js
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
